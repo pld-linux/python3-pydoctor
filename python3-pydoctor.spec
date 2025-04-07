@@ -6,7 +6,7 @@
 Summary:	API doc generator
 Name:		python3-%{module}
 Version:	24.11.2
-Release:	1
+Release:	2
 License:	MIT/X11
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pydoctor/
