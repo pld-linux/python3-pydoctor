@@ -5,23 +5,26 @@
 %define		module	pydoctor
 Summary:	API doc generator
 Name:		python3-%{module}
-Version:	24.11.2
-Release:	2
+Version:	25.4.0
+Release:	1
 License:	MIT/X11
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pydoctor/
 Source0:	https://files.pythonhosted.org/packages/source/p/pydoctor/%{module}-%{version}.tar.gz
-# Source0-md5:	93b7c94105d184dab7343860e3a10d0d
+# Source0-md5:	8743ec507e6d2417527b91babc308c3c
 URL:		https://pypi.org/project/pydoctor/
 BuildRequires:	python3-modules >= 1:3.2
 BuildRequires:	python3-setuptools
 %if %{with tests}
+BuildRequires:	python3-cachecontrol
 BuildRequires:	python3-configargparse
+BuildRequires:	python3-lunr
 BuildRequires:	python3-twisted
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
+BuildRequires:	python3-lunr
 BuildRequires:	python3-twisted
 BuildRequires:	sphinx-pdg-3
 %endif
