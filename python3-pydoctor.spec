@@ -6,7 +6,7 @@
 Summary:	API doc generator
 Name:		python3-%{module}
 Version:	25.10.1
-Release:	1
+Release:	2
 License:	MIT/X11
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pydoctor/
@@ -87,7 +87,7 @@ PYTEST_PLUGINS= \
 %{__make} -C docs html \
 	PYTHONPATH=$PWD \
 	SPHINXBUILD=sphinx-build-3
-rm -rf docs/_build/html/_sources
+rm -rf docs/build/html/_sources
 %endif
 
 %install
@@ -108,5 +108,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc docs/_build/html/*
+%doc docs/build/html/*
 %endif
