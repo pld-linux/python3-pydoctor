@@ -5,30 +5,38 @@
 %define		module	pydoctor
 Summary:	API doc generator
 Name:		python3-%{module}
-Version:	25.4.0
+Version:	25.10.1
 Release:	1
 License:	MIT/X11
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pydoctor/
 Source0:	https://files.pythonhosted.org/packages/source/p/pydoctor/%{module}-%{version}.tar.gz
-# Source0-md5:	8743ec507e6d2417527b91babc308c3c
+# Source0-md5:	c71040b4403b3b84aad37d50f0c17ae8
 URL:		https://pypi.org/project/pydoctor/
-BuildRequires:	python3-modules >= 1:3.2
+BuildRequires:	python3-modules >= 1:3.9
 BuildRequires:	python3-setuptools
 %if %{with tests}
+BuildRequires:	python3-bs4
 BuildRequires:	python3-cachecontrol
 BuildRequires:	python3-configargparse
+BuildRequires:	python3-docutils >= 0.18.1
+BuildRequires:	python3-hypothesis
 BuildRequires:	python3-lunr
+BuildRequires:	python3-pytest
 BuildRequires:	python3-twisted
+BuildRequires:	sphinx-pdg-3
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
 BuildRequires:	python3-lunr
+BuildRequires:	python3-sphinx_argparse
+BuildRequires:	python3-sphinx_rtd_theme
+BuildRequires:	python3-sphinxcontrib-spelling
 BuildRequires:	python3-twisted
 BuildRequires:	sphinx-pdg-3
 %endif
-Requires:	python3-modules >= 1:3.2
+Requires:	python3-modules >= 1:3.9
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,10 +73,14 @@ Dokumentacja API modułu Pythona %{module}.
 %py3_build
 
 %if %{with tests}
+# CacheControl filecache in tests writes under $HOME
+install -d test-home
+export HOME=$(pwd)/test-home
 # use explicit plugins list for reliable builds (delete PYTEST_PLUGINS if empty)
+# test_utils.TestDevMode expects the suite to run in Python dev mode
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 PYTEST_PLUGINS= \
-%{__python3} -m pytest pydoctor/test
+%{__python3} -X dev -m pytest pydoctor/test
 %endif
 
 %if %{with doc}
